@@ -278,9 +278,9 @@ else
   DISK_STATE="${RED}Élevée  (${DISK_PERCENT}%)${RESET}"
 fi
 
-# Utilisateurs
-UTILISATEURS=$(who | wc -l)
-DERNIERE_CONNEXION=$(last -n 1 -w | head -n 1)
+# Utilisateurs (non utilisé actuellement)
+# UTILISATEURS=$(who | wc -l)
+# DERNIERE_CONNEXION=$(last -n 1 -w | head -n 1)
 
 # IP publique + WHOIS + géolocalisation
 IP_PUBLIQUE=$(curl -s ifconfig.me || curl -s ipinfo.io/ip)
@@ -301,7 +301,6 @@ echo -e "${BOLD}${BRIGHT_MAGENTA}Charge moyenne (1,5,15'):   ${RESET}$LOAD_FULL"
 echo -e "${BOLD}${BRIGHT_MAGENTA}Charge système :            ${RESET}$LOAD_1 (sur $CPU_CORES cœurs) → $LOAD_STATE"
 echo -e "${BOLD}${BRIGHT_MAGENTA}Mémoire :                   ${RESET}$MEM_USED / $MEM_TOTAL (Libre : $MEM_FREE) → $MEM_STATE"
 echo -e "${BOLD}${BRIGHT_MAGENTA}Disque (/) :                ${RESET}$DISK_USAGE → $DISK_STATE"
-echo -e "${BOLD}${BRIGHT_MAGENTA}Dernière connexion :        ${RESET}$DERNIERE_CONNEXION"
 echo -e "${BOLD}${BRIGHT_YELLOW}--------------------------------------------------------------------------------------------${RESET}"
 EOFSCRIPT
 
@@ -315,15 +314,30 @@ afficher_succes "Script rendu exécutable"
 # Déplacement vers /etc/update-motd.d/
 afficher_etape "Installation du script dans /etc/update-motd.d/..."
 
-# Désactiver les autres scripts MOTD par défaut (optionnel)
-if demander_confirmation "Voulez-vous désactiver les autres scripts MOTD par défaut ?"; then
-    afficher_info "Désactivation des scripts MOTD par défaut..."
+# Désactiver les messages MOTD par défaut de Debian/Ubuntu (optionnel)
+if demander_confirmation "Voulez-vous désactiver les messages MOTD par défaut de Debian/Ubuntu ?"; then
+    afficher_info "Désactivation des messages MOTD par défaut..."
+    
+    # Supprimer le fichier motd par défaut
+    if [[ -f /etc/motd ]]; then
+        rm -f /etc/motd 2>/dev/null
+        afficher_succes "Fichier /etc/motd supprimé"
+    fi
+    
+    # Désactiver les scripts qui affichent les messages par défaut
+    chmod -x /etc/update-motd.d/00-header 2>/dev/null && afficher_succes "Script 00-header désactivé"
+    chmod -x /etc/update-motd.d/10-uname 2>/dev/null && afficher_succes "Script 10-uname désactivé"
+    chmod -x /etc/update-motd.d/10-help-text 2>/dev/null && afficher_succes "Script 10-help-text désactivé"
+    
+    # Désactiver tous les autres scripts MOTD par défaut (sauf le nôtre)
     for file in /etc/update-motd.d/*; do
         if [[ -f "$file" && "$file" != "/etc/update-motd.d/motd-tutotech" ]]; then
             chmod -x "$file" 2>/dev/null
         fi
     done
-    afficher_succes "Scripts MOTD par défaut désactivés"
+    
+    afficher_succes "Messages MOTD par défaut de Debian/Ubuntu désactivés"
+    afficher_info "Le message de copyright Debian ne s'affichera plus"
 fi
 
 # Copie du fichier
