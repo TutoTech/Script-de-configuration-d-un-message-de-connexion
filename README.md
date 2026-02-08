@@ -36,7 +36,6 @@ Un script d'installation interactif et automatisé pour configurer un **Message 
   - FQDN et adresses IP (locale et publique)
   - Géolocalisation de l'IP publique
   - État du système (charge CPU, mémoire, disque)
-  - Dernière connexion
   - Noyau Linux et architecture
 - 🎯 **Indicateurs colorés** pour l'état du système (vert/jaune/rouge)
 - 🚀 **Compatible** Debian 11+ et Ubuntu 20.04+
@@ -73,7 +72,6 @@ Charge moyenne (1,5,15'):   0.45 0.38 0.32
 Charge système :            0.45 (sur 4 cœurs) → Faible (système détendu)
 Mémoire :                   2.1G / 7.8G (Libre : 3.2G) → Faible (26.9%)
 Disque (/) :                12G / 50G utilisés (24%) → Faible (24%)
-Dernière connexion :        user     pts/0        2026-02-08 14:32   still logged in
 --------------------------------------------------------------------------------------------
 ```
 
@@ -368,30 +366,6 @@ Ce projet est sous licence MIT - voir le fichier [LICENSE](LICENSE) pour plus de
 - 🌐 Website: [TutoTech](https://tutotech.org)
 - 📧 Email: contact@tutotech.fr
 - 🐙 GitHub: [@TutoTech](https://github.com/TutoTech)
-
----
-
-## ⭐ Remerciements
-
-- Merci à la communauté Debian/Ubuntu pour l'écosystème MOTD
-- Inspiré par les meilleures pratiques d'administration système
-- ASCII Art généré avec [TAAG](https://patorjk.com/software/taag/)
-
----
-
-## 📸 Captures d'Écran
-
-### Installation Interactive
-
-![Installation Process](https://via.placeholder.com/800x400/1a1a1a/00d4ff?text=Installation+Interactive)
-
-### Personnalisation de l'ASCII Art
-
-![ASCII Art Selection](https://via.placeholder.com/800x400/1a1a1a/ffaa00?text=Personnalisation+ASCII+Art)
-
-### MOTD Final
-
-![Final MOTD](https://via.placeholder.com/800x400/1a1a1a/00ff00?text=MOTD+Final)
 
 ---
 
